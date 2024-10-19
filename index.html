@@ -3,9 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API-agent</title>
+    <title>API-garage</title>
 </head>
 <body>
-    
+    <div>
+        <form>
+            <div class="all-inputs" >
+                <select>
+                    <option value="GET" selected >GET</option>
+                    <option value="POST" >POST</option>
+                    <option value="PUT" >PUT</option>
+                    <option value="PATCH" >PATCH</option>
+                    <option value="DELETE" >DELETE</option>
+                </select>
+                <input required type="url" placeholder="https://api-garage.com" />
+                <button type="submit" >Send</button>
+            </div>
+        </form>
+    </div>
 </body>
 </html>
