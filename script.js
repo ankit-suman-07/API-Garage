@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const form = document.querySelector("[]data-form");
+const form = document.querySelector("[data-form]");
 const queryParamsContainer = document.querySelector("[data-query-params]");
 const requestHeadersContainer = document.querySelector("[data-query-headers]");
 const keyValueTemplate = document.querySelector("[data-key-value-template]");
@@ -27,9 +27,11 @@ form.addEventListener("submit", e => {
 
     axios({
         url: document.querySelector("[data-url]").value,
-        method: document.querySelector("data-method").value,
+        method: document.querySelector("[data-method]").value,
         params: keyValuePairsToObjects(queryParamsContainer),
         headers: keyValuePairsToObjects(requestHeadersContainer)
+    }).then(response => {
+        console.log(response);
     })
 })
 
@@ -39,4 +41,16 @@ function createKeyValuePair() {
         e.target.closest("[data-key-value-pair]").remove()
     })
     return element;
+}
+
+function keyValuePairsToObjects(container) {
+    const pairs = container.querySelectorAll("data-key-value-pair");
+
+    return [...pairs].reduce((data, pair) => {
+        const key = pair.querySelector("[data-key]").value
+        const value = pair.querySelector("[data-value]").value
+
+        if (key === "") return data;
+        return { ...data, [key]: value}
+    }, {})
 }
