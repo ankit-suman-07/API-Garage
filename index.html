@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="script.js"></script>
     <title>API-garage</title>
 </head>
 <body>
@@ -20,6 +21,31 @@
                 <button type="submit" >Send</button>
             </div>
         </form>
+        <div class="query-params" >
+            <div data-query-params>
+
+            </div>
+            <button data-add-query-param-btn>Add query</button>
+        </div>
+        <div class="headers" >
+            <div  data-query-headers>
+
+            </div>
+            <button data-add-query-header-btn>Add header</button>
+        </div>
+        <div class="json" >
+            <div data-json-request-body >
+
+            </div>
+        </div>
+
+        <template data-key-value-template >
+            <div data-key-value-pair >
+                <input type="text" data-key placeholder="Key" />
+                <input type="text" data-value placeholder="Value" />
+                <button type="button" data-remove-btn > Remove</button>
+            </div>
+        </template>
     </div>
 </body>
 </html>
