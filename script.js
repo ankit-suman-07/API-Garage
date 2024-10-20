@@ -4,6 +4,9 @@ const form = document.querySelector("[data-form]");
 const queryParamsContainer = document.querySelector("[data-query-params]");
 const requestHeadersContainer = document.querySelector("[data-query-headers]");
 const keyValueTemplate = document.querySelector("[data-key-value-template]");
+const responseHeadersContainer = document.querySelector("[data-response-headers]");
+const response = document.querySelector("[data-response-section]");
+
 
 document
     .querySelector("[data-add-query-param-btn]")
@@ -31,9 +34,30 @@ form.addEventListener("submit", e => {
         params: keyValuePairsToObjects(queryParamsContainer),
         headers: keyValuePairsToObjects(requestHeadersContainer)
     }).then(response => {
+        document.querySelector("[data-response-section]");
+        // updateResponseDetails(response);
+        // updateResponseEditor(response.data);
+        updateResponseHeader(response.headers);
         console.log(response);
+        console.log(response.status);
+        console.log(response.data);
     })
+
+    // response.innerHTML = "<p>" + response + "</p>";
 })
+
+function updateResponseHeader(headers) {
+    responseHeadersContainer.innerHTML = "";
+    Object.entries(headers).forEach(([key, value]) => {
+        const keyElement = document.createElement("div");
+        keyElement.textContent = key;
+        responseHeadersContainer.append(keyElement);
+
+        const valueElement = document.createElement("div");
+        valueElement.textContent = value;
+        responseHeadersContainer.append(valueElement);
+    })
+}
 
 function createKeyValuePair() {
     const element = keyValueTemplate.content.cloneNode(true);
