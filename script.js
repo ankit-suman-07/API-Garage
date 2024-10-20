@@ -1,4 +1,5 @@
 import axios from "axios";
+import prettyBytes from "pretty-bytes";
 
 const form = document.querySelector("[data-form]");
 const queryParamsContainer = document.querySelector("[data-query-params]");
