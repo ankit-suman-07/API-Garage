@@ -1,5 +1,6 @@
 import axios from "axios";
 import prettyBytes from "pretty-bytes";
+import setupEditors from "./setupEditor";
 
 const form = document.querySelector("[data-form]");
 const queryParamsContainer = document.querySelector("[data-query-params]");
@@ -42,6 +43,8 @@ axios.interceptors.response.use(updateEndTime, e => {
     return Promise.reject(updateEndTime(e.response))
 })
 
+const {requestEditor, updateResponseEditor} = setupEditors()
+
 form.addEventListener("submit", e => {
     e.preventDefault();
 
@@ -53,7 +56,7 @@ form.addEventListener("submit", e => {
     }).catch(e => e).then(response => {
         document.querySelector("[data-response-section]");
         updateResponseDetails(response);
-        // updateResponseEditor(response.data);
+        updateResponseEditor(response.data);
         updateResponseHeader(response.headers);
         console.log(response);
         console.log(response.status);
