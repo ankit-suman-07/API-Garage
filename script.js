@@ -25,6 +25,22 @@ document
 queryParamsContainer.append(createKeyValuePair());
 requestHeadersContainer.append(createKeyValuePair());
 
+axios.interceptors.request.use(request => {
+    request.customData = request.customData || {};
+    request.customData.startTime = new Date().getTime();
+    return request;
+})
+
+function updateEndTime(response) {
+    response.customData = response.customData || {};
+    response.customData.time = new Date().getTime() - response.config.customData.startTime;
+    return response;
+}
+
+axios.interceptors.response.use(updateEndTime, e => {
+    return Promise.reject(updateEndTime(e.response))
+})
+
 form.addEventListener("submit", e => {
     e.preventDefault();
 
@@ -33,9 +49,9 @@ form.addEventListener("submit", e => {
         method: document.querySelector("[data-method]").value,
         params: keyValuePairsToObjects(queryParamsContainer),
         headers: keyValuePairsToObjects(requestHeadersContainer)
-    }).then(response => {
+    }).catch(e => e).then(response => {
         document.querySelector("[data-response-section]");
-        // updateResponseDetails(response);
+        updateResponseDetails(response);
         // updateResponseEditor(response.data);
         updateResponseHeader(response.headers);
         console.log(response);
@@ -45,6 +61,11 @@ form.addEventListener("submit", e => {
 
     // response.innerHTML = "<p>" + response + "</p>";
 })
+
+function updateResponseDetails(response) {
+    document.querySelector("[data-status]").textContent = response.status;
+    document.querySelector("[data-time]").textContent = response.customData.time;
+}
 
 function updateResponseHeader(headers) {
     responseHeadersContainer.innerHTML = "";
